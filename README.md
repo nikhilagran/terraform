@@ -12,24 +12,25 @@ resource "aws_autoscaling_group" "asg" {
   max_size             = 3
   min_size             = 1
   vpc_zone_identifier  = ["subnet-09cbd3fafc401e072"] # Replace with your subnet ID
-  launch_configuration = aws_launch_configuration.lc.id
 }
 
-resource "aws_launch_configuration" "lc" {
+resource "aws_launch_template" "lc" {
   image_id      = "ami-0e2c8caa4b6378d8c"
+
   instance_type = "t2.micro"
   key_name      = "keyforterraform"
+
 }
 
 resource "aws_lb" "my_lb" {
   name               = "my-load-balancer"
   internal           = false
   load_balancer_type = "application"
-  subnets            = ["subnet-00df84bef9a03f709", "subnet-02ba1dab666c6b03e"]
+  subnets            = ["subnet-09cbd3fafc401e072", "subnet-0573ba8b0bf974a90"]
 }
 
 resource "aws_route53_record" "dns" {
-  zone_id = "Z000137625AQVWSTOB5ZX" # Replace with your Route 53 hosted zone ID
+  zone_id = "Z04859902TQGQRD3RZGXU" # Replace with your Route 53 hosted zone ID
   name    = "samsorzone10.com"
   type    = "A"
 
